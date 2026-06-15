@@ -5,12 +5,12 @@ function App() {
 
   return (
     <>
-      <div className='items-center justify-center'>
+      <div className='flex flex-col min-h-screen items-center justify-center'>
+
         <h1 className='text-3xl font-bold '>Get started</h1>
         <p>
           Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
         </p>
-
         <button
           type="button"
           className="counter"
@@ -18,9 +18,7 @@ function App() {
         >
           Count is {count}
         </button>
-
       </div>
-
     </>
   )
 }
