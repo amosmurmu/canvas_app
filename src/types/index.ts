@@ -2,6 +2,7 @@ import type { Edge, Node } from '@xyflow/react'
 
 export type ServiceStatus = 'Healthy' | 'Degraded' | 'Down'
 
+// extended with record temp for dev
 export interface ServiceNodeData extends Record<string, unknown> {
   label: string
   description?: string
@@ -10,7 +11,7 @@ export interface ServiceNodeData extends Record<string, unknown> {
   memoryGB: number
   diskGB: number
   region: string
-  price: number
+  price: string
   icon: string
   color: string
 }
