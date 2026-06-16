@@ -75,10 +75,13 @@ export const ServiceNodeComponent = ({
 
         {/* CPU bar */}
         <div className="relative h-1.5 rounded-full bg-app-muted mb-2 overflow-hidden">
-          <div className="h-full rounded-full" style={{
-            width: `${data.cpuValue}%`,
-            background: `linear-gradient(90deg, #6366f1, ${data.cpuValue >= 80 ? '#ef4444' : '#22c55e'})`,
-          }} />
+          <div
+            className="h-full rounded-full transition-all duration-300"
+            style={{
+              width: `${data.cpuValue}%`,
+              background: `linear-gradient(90deg, #6366f1, ${data.cpuValue >= 80 ? '#ef4444' : '#22c55e'})`,
+            }}
+          />
         </div>
         <div className="text-right text-[10px] font-mono text-app-secondary mb-2">
           {(data.cpuValue * 0.001).toFixed(2)}

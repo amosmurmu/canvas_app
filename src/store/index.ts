@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-export type InspectorTab = 'config' | 'runtime'
+export type InspectorTab = 'config' | 'runtime' | 'devtools'
 
 interface AppState {
   selectedAppId: string

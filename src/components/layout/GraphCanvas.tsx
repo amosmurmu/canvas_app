@@ -15,6 +15,7 @@ import {
 import { useQuery } from '@tanstack/react-query';
 import { Loader2, AlertTriangle, RefreshCw } from 'lucide-react';
 import { ServiceNode } from '@/components/nodes/ServiceNode';
+import { NodeInspector as FlowNodeInspector } from '@/components/devtools';
 import { useAppStore } from '@/store';
 import type { AppNode, AppEdge } from '@/types';
 import { fetchGraph } from '@/api/mock';
@@ -39,10 +40,11 @@ function useMediaQuery(query: string) {
 interface GraphCanvasProps {
   onNodeSelect: (node: AppNode | undefined) => void;
   flowRef: React.MutableRefObject<ReactFlowInstance | null>;
+  updateNodeRef: React.MutableRefObject<((id: string, patch: Partial<AppNode['data']>) => void) | null>;
 }
 
-export function GraphCanvas({ onNodeSelect, flowRef }: GraphCanvasProps) {
-  const { selectedAppId, selectedNodeId, setSelectedNode } = useAppStore();
+export function GraphCanvas({ onNodeSelect, flowRef, updateNodeRef }: GraphCanvasProps) {
+  const { selectedAppId, selectedNodeId, setSelectedNode, activeInspectorTab } = useAppStore();
   const [nodes, setNodes, onNodesChange] = useNodesState<AppNode>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<AppEdge>([]);
   const didFit = useRef(false);
@@ -76,6 +78,24 @@ export function GraphCanvas({ onNodeSelect, flowRef }: GraphCanvasProps) {
     const node = nodes.find((n) => n.id === selectedNodeId);
     onNodeSelect(node);
   }, [selectedNodeId, nodes, onNodeSelect]);
+
+  const updateNodeData = useCallback(
+    (id: string, patch: Partial<AppNode['data']>) => {
+      setNodes((ns) =>
+        ns.map((n) =>
+          n.id === id ? { ...n, data: { ...n.data, ...patch } } : n
+        )
+      );
+    },
+    [setNodes]
+  );
+
+  useEffect(() => {
+    updateNodeRef.current = updateNodeData;
+    return () => {
+      updateNodeRef.current = null;
+    };
+  }, [updateNodeData, updateNodeRef]);
 
   const handleInit = useCallback(
     (instance: ReactFlowInstance) => {
@@ -197,6 +217,7 @@ export function GraphCanvas({ onNodeSelect, flowRef }: GraphCanvasProps) {
           )}
           position={isMobile ? 'top-right' : 'bottom-right'}
         />
+        {activeInspectorTab === 'devtools' && <FlowNodeInspector />}
       </ReactFlow>
 
       {/* Delete hint */}

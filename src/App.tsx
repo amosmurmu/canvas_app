@@ -20,6 +20,7 @@ const queryClient = new QueryClient({
 function InnerApp() {
   const { selectedAppId } = useAppStore();
   const flowRef = useRef<ReactFlowInstance | null>(null);
+  const updateNodeRef = useRef<((id: string, patch: Partial<AppNode['data']>) => void) | null>(null);
   const [selectedNode, setSelectedNode] = useState<AppNode | undefined>();
 
   const handleNodeSelect = useCallback((node: AppNode | undefined) => {
@@ -28,6 +29,7 @@ function InnerApp() {
 
   const handleUpdateNode = useCallback(
     (id: string, patch: Partial<AppNode['data']>) => {
+      updateNodeRef.current?.(id, patch);
       setSelectedNode((prev) =>
         prev?.id === id ? { ...prev, data: { ...prev.data, ...patch } } : prev
       );
@@ -47,7 +49,11 @@ function InnerApp() {
           <div className='hidden sm:flex'>
             <LeftRail />
           </div>
-          <GraphCanvas onNodeSelect={handleNodeSelect} flowRef={flowRef} />
+          <GraphCanvas
+            onNodeSelect={handleNodeSelect}
+            flowRef={flowRef}
+            updateNodeRef={updateNodeRef}
+          />
           <div className="hidden lg:flex">
             <AppPanel selectedNode={selectedNode} onUpdateNode={handleUpdateNode} />
           </div>

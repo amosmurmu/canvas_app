@@ -117,6 +117,10 @@ export function AppPanel({ selectedNode, onUpdateNode, isMobile, onClose }: AppP
       {/* Node inspector */}
       <div className="flex-1 min-h-0 overflow-y-auto">
         {selectedNode ? (
+          // node inspect 
+          // <>
+          // <span>node insepct comp</span>
+          // </>
           <NodeInspector node={selectedNode} onUpdateNode={onUpdateNode} />
         ) : (
           <div className="flex flex-col items-center justify-center h-full py-8 px-4 text-center">

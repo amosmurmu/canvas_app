@@ -109,11 +109,11 @@ export function NodeInspector({ node, onUpdateNode }: NodeInspectorProps) {
       {/* Tabs */}
       <Tabs.Root
         value={activeInspectorTab}
-        onValueChange={(v: string) => setActiveInspectorTab(v as 'config' | 'runtime')}
+        onValueChange={(v: string) => setActiveInspectorTab(v as 'config' | 'runtime' | 'devtools')}
         className="flex flex-col flex-1 min-h-0"
       >
         <Tabs.List className="flex px-4 pt-2 border-b border-app-border gap-4">
-          {(['config', 'runtime'] as const).map((tab) => (
+          {(['config', 'runtime', 'devtools'] as const).map((tab) => (
             <Tabs.Trigger
               key={tab}
               value={tab}
@@ -270,6 +270,16 @@ export function NodeInspector({ node, onUpdateNode }: NodeInspectorProps) {
               {node.id}
             </div>
           </div>
+        </Tabs.Content>
+
+        {/* Devtools Tab */}
+        <Tabs.Content
+          value="devtools"
+          className="flex-1 overflow-y-auto px-4 py-3"
+        >
+          <p className="text-xs font-mono text-app-secondary leading-relaxed">
+            Node debug overlays are shown on the canvas below each node. Switch back to Config or Runtime to hide them.
+          </p>
         </Tabs.Content>
       </Tabs.Root>
     </div>
