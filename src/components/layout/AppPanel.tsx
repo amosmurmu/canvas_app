@@ -79,7 +79,7 @@ export function AppPanel({ selectedNode, onUpdateNode, isMobile, onClose }: AppP
                 <p className="text-[10px] font-mono text-red-400">Failed to load apps</p>
                 <button
                   onClick={() => void refetch()}
-                  className="text-[10px] font-mono text-indigo-400 hover:underline mt-0.5"
+                  className="text-[10px] font-mono cursor-pointer text-indigo-400 hover:underline mt-0.5"
                 >
                   Retry
                 </button>

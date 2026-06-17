@@ -5,12 +5,13 @@ import App from './App.tsx'
 import { ThemeProvider } from './components/theme-provider.tsx'
 
 async function enableMocking() {
-  if (import.meta.env.DEV) {
-    const { worker } = await import('./mocks/browser')
-    return worker.start({
-      onUnhandledRequest: 'bypass',
-    })
-  }
+  // removed dev env to deploy to vercel
+  // if (import.meta.env.DEV) {
+  const { worker } = await import('./mocks/browser')
+  return worker.start({
+    onUnhandledRequest: 'bypass',
+  })
+  // }
 }
 
 enableMocking().then(() => {
