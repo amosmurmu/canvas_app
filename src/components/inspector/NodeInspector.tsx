@@ -61,17 +61,11 @@ export function NodeInspector({ node, onUpdateNode }: NodeInspectorProps) {
     onUpdateNode(node.id, { description: descValue });
   }, [node.id, descValue, onUpdateNode]);
 
-  const handleStatusChange = useCallback(
-    (status: ServiceStatus) => {
-      onUpdateNode(node.id, { status });
-    },
-    [node.id, onUpdateNode]
-  );
   return (
     <div className="flex flex-col h-full">
       {/* Inspector Header */}
       <div className="px-4 py-3 border-b border-app-border">
-        <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <MapIcon name={node.data.icon} size="lg" color={node.data.color} showBackground />
             <span className="text-sm font-mono font-semibold text-app-text">
@@ -80,7 +74,7 @@ export function NodeInspector({ node, onUpdateNode }: NodeInspectorProps) {
           </div>
           <span
             className={cn(
-              'text-[10px] font-mono px-2 py-0.5 rounded-full  border',
+              'text-[10px] font-mono px-2 py-0.5 rounded-full border',
               statusColors[node.data.status]
             )}
           >
@@ -92,7 +86,9 @@ export function NodeInspector({ node, onUpdateNode }: NodeInspectorProps) {
           {(['Healthy', 'Degraded', 'Down'] as ServiceStatus[]).map((s) => (
             <button
               key={s}
-              onClick={() => handleStatusChange(s)}
+              onClick={() => {
+                console.log("status changed to", s);
+              }}
               className={cn(
                 'text-[9px] font-mono px-2 py-1 rounded-md cursor-pointer border transition-all',
                 node.data.status === s
