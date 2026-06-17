@@ -81,7 +81,11 @@ Type Checking or check
 ```bash
 npm run typecheck or npm run check 
 ```
+---
 
+## Deployment
+ * On Vercel [canvas_app](https://canvas-app-two.vercel.app/)
+   
 ---
 
 ## Project Structure
